@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ContractLoader, Dapparatus, Transactions, Gas, Address, Events } from "dapparatus";
+import { ContractLoader, Dapparatus, Blockie, Transactions, Gas, Address, Events } from "dapparatus";
 import Web3 from 'web3';
 import axios from 'axios';
 import { I18nextProvider } from 'react-i18next';
@@ -1301,8 +1301,7 @@ render() {
           const queryStringParams = querystring.parse(window.location.search);
           if (view !== 'loader' && queryStringParams && queryStringParams['burnerjs']) {
               return (
-                  <div style={{color: '#fff'}}>
-
+                  <div style={{color: '#fff', padding: '0 20px'}}>
                     <BurnerTransaction
                       companyLogoUrl={queryStringParams['companyLogoUrl']}
                       companyName={queryStringParams['companyName']}
@@ -1316,6 +1315,13 @@ render() {
                         }}>Cancel</button>
                     </BurnerTransaction>
 
+                    <div style={{padding: '40px 0 0 0', display: 'flex', fontSize: '20px'}}>
+                        <Blockie
+                            address={queryStringParams['address']}
+                            config={{size:12}}>
+                        </Blockie>
+                        <div style={{ paddingLeft: '10px'}}>{queryStringParams['address'].substring(0, 10)}...</div>
+                    </div>
 
                   </div>
               )
