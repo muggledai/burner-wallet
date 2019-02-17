@@ -962,12 +962,13 @@ syncFullTransactions(){
   }
 }
 
-async confirmBurnerTransaction(ERC20TOKEN, companyName, companyTxId, toAddress, value) {
+async confirmBurnerTransaction(ERC20TOKEN, companyName, companyTxId, toAddress, value, cb = () => {}) {
     const txData = this.state.web3.utils.utf8ToHex(`${companyName}:${companyTxId}`);
 
     await this.state.send(toAddress, value, 120000, txData, (result) => {
         if(result && result.transactionHash){
             console.log('complete:', result.transactionHash)
+            cb(result.transactionHash)
         } else {
             console.error('errror')
         }
@@ -1337,6 +1338,9 @@ render() {
                                         queryStringParams['companyTxId'],
                                         queryStringParams['address'],
                                         queryStringParams['total'],
+                                        (txHash) => {
+                                            window.location.href = queryStringParams.redirectBack + `?action=confirm&status=success&txhash=${txHash}`;
+                                        }
                                     );
                                 }}>
                           Send
