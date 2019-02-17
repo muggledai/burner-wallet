@@ -40,6 +40,8 @@ import Bottom from './components/Bottom';
 import customRPCHint from './customRPCHint.png';
 import namehash from 'eth-ens-namehash'
 
+import querystring from 'query-string';
+
 //https://github.com/lesnitsky/react-native-webview-messaging/blob/v1/examples/react-native/web/index.js
 import RNMessageChannel from 'react-native-webview-messaging';
 
@@ -1292,6 +1294,20 @@ render() {
                 <Ruler/>
               </div>
             )
+          }
+
+          const queryStringParams = querystring.parse(window.location.search);
+          if (view !== 'loader' && queryStringParams && queryStringParams['burnerjs']) {
+              return (
+                  <div style={{color: '#fff'}}>
+                    <div>Source: {queryStringParams.source}</div>
+                    <div>Address: {queryStringParams.address}</div>
+                    <div>Amount: {queryStringParams.amount}</div>
+                    <button onClick={() => {
+                        window.location.href = queryStringParams.redirectBack + '?action=cancel&status=noop';
+                    }}>Cancel</button>
+                  </div>
+              )
           }
 
           switch(view) {
