@@ -30,6 +30,20 @@ export default ({buttonStyle,ERC20TOKEN,address, balance, changeAlert, changeVie
   let sendButtons = (
     <div>
       <div className="content ops row">
+        <div className="col-6 p-1" onClick={() => changeView('deposit')}>
+         <button className="btn btn-large w-100" style={buttonStyle.primary}>
+           <Scaler config={{startZoomAt:400,origin:"50% 50%"}}>
+             <i className="fas"  /> {i18next.t('main_card.deposit')}
+           </Scaler>
+         </button>
+       </div>
+       <div className="col-6 p-1" onClick={() => changeView('withdraw')}>
+         <button className="btn btn-large w-100" style={buttonStyle.primary}>
+           <Scaler config={{startZoomAt:400,origin:"50% 50%"}}>
+             <i className="fas"  /> {i18next.t('main_card.withdraw')}
+           </Scaler>
+         </button>
+       </div>
         <div className="col-6 p-1" onClick={() => changeView('receive')}>
           <button className="btn btn-large w-100" style={buttonStyle.primary}>
             <Scaler config={{startZoomAt:400,origin:"50% 50%"}}>

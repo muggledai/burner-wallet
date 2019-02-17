@@ -23,12 +23,16 @@
     "request_funds_title": "Request funds",
     "request": "Request",
     "vendors": "Vendors",
+    "deposit": "Deposit",
+    "withdraw": "Withdraw",
     "main_card": {
       "receive": "Receive",
       "send": "Send",
       "share": "Share",
       "link": "Link",
-      "vendors": "Vendors"
+      "vendors": "Vendors",
+      "deposit": "Deposit",
+      "withdraw": "Withdraw"
     },
     "send_with_link": {
       "error": "Please enter a valid amount"

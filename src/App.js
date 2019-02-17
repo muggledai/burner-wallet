@@ -53,6 +53,9 @@ import eth from './ethereum.png';
 import dai from './dai.jpg';
 import xdai from './xdai.jpg';
 
+import Deposit from './components/Withdraw';
+import Withdraw from './components/Withdraw';
+
 let base64url = require('base64url')
 const EthCrypto = require('eth-crypto');
 
@@ -1384,10 +1387,10 @@ render() {
 
                   <Balance icon={xdai} selected={selected} text={"xDai"} amount={this.state.xdaiBalance} address={account} dollarDisplay={dollarDisplay}/>
                   <Ruler/>
-                  <Balance icon={dai} selected={selected} text={"DAI"} amount={this.state.daiBalance} address={account} dollarDisplay={dollarDisplay}/>
+                  {/*<Balance icon={dai} selected={selected} text={"DAI"} amount={this.state.daiBalance} address={account} dollarDisplay={dollarDisplay}/>
                   <Ruler/>
                   <Balance icon={eth} selected={selected} text={"ETH"} amount={parseFloat(this.state.ethBalance) * parseFloat(this.state.ethprice)} address={account} dollarDisplay={dollarDisplay}/>
-                  <Ruler/>
+                  <Ruler/>*/}
                   {badgeDisplay}
 
                   <MainCard
@@ -1529,6 +1532,66 @@ render() {
                   <NavCard title={i18n.t('send_to_address_title')} goBack={this.goBack.bind(this)}/>
                   {defaultBalanceDisplay}
                   <SendToAddress
+                    parseAndCleanPath={this.parseAndCleanPath.bind(this)}
+                    openScanner={this.openScanner.bind(this)}
+                    scannerState={this.state.scannerState}
+                    ensLookup={this.ensLookup.bind(this)}
+                    ERC20TOKEN={ERC20TOKEN}
+                    buttonStyle={buttonStyle}
+                    balance={balance}
+                    web3={this.state.web3}
+                    address={account}
+                    send={send}
+                    goBack={this.goBack.bind(this)}
+                    changeView={this.changeView}
+                    setReceipt={this.setReceipt}
+                    changeAlert={this.changeAlert}
+                    dollarDisplay={dollarDisplay}
+                  />
+                </div>
+                <Bottom
+                  text={i18n.t('cancel')}
+                  action={this.goBack.bind(this)}
+                />
+              </div>
+            );
+            case 'deposit':
+            return (
+              <div>
+                <div className="send-to-address card w-100" style={{zIndex:1}}>
+                  <NavCard title={i18n.t('deposit')} goBack={this.goBack.bind(this)}/>
+                  {defaultBalanceDisplay}
+                  <Deposit
+                    parseAndCleanPath={this.parseAndCleanPath.bind(this)}
+                    openScanner={this.openScanner.bind(this)}
+                    scannerState={this.state.scannerState}
+                    ensLookup={this.ensLookup.bind(this)}
+                    ERC20TOKEN={ERC20TOKEN}
+                    buttonStyle={buttonStyle}
+                    balance={balance}
+                    web3={this.state.web3}
+                    address={account}
+                    send={send}
+                    goBack={this.goBack.bind(this)}
+                    changeView={this.changeView}
+                    setReceipt={this.setReceipt}
+                    changeAlert={this.changeAlert}
+                    dollarDisplay={dollarDisplay}
+                  />
+                </div>
+                <Bottom
+                  text={i18n.t('cancel')}
+                  action={this.goBack.bind(this)}
+                />
+              </div>
+            );
+            case 'withdraw':
+            return (
+              <div>
+                <div className="send-to-address card w-100" style={{zIndex:1}}>
+                  <NavCard title={i18n.t('withdraw')} goBack={this.goBack.bind(this)}/>
+                  {defaultBalanceDisplay}
+                  <Withdraw
                     parseAndCleanPath={this.parseAndCleanPath.bind(this)}
                     openScanner={this.openScanner.bind(this)}
                     scannerState={this.state.scannerState}
