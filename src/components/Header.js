@@ -1,7 +1,7 @@
 import React from 'react';
 import { Scaler, Blockie } from "dapparatus";
 import burnerloader from '../burnerloader.gif';
-export  default ({openScanner, network, total, dollarDisplay, ens, title, titleImage, mainStyle, balance, address, changeView, view}) => {
+export  default ({hideQRButton, openScanner, network, total, dollarDisplay, ens, title, titleImage, mainStyle, balance, address, changeView, view}) => {
 
 
   let sendButtonOpacity = 1.0
@@ -64,7 +64,7 @@ export  default ({openScanner, network, total, dollarDisplay, ens, title, titleI
     delete scanButtonStyle.bottom
   }
 
-  let bottomRight = (
+  let bottomRight = hideQRButton ? null: (
     <div style={scanButtonStyle} onClick={() => {
       openScanner({view:"send_to_address"})
     }} >
@@ -100,14 +100,14 @@ export  default ({openScanner, network, total, dollarDisplay, ens, title, titleI
   }
 
   let topRight = (
-    <div style={{zIndex:-2,position:"absolute",right:28,top:-4,zIndex:1,fontSize:46,opacity:0.9}}  >
-      {moneyDisplay}
+    <div style={{zIndex:-2,position:"absolute",right:28,top:-4,zIndex:1,fontSize:26,opacity:0.9}}  >
+       🧔 muggleDAI
     </div>
   )
 
 
   return (
-    <div className="header" style={{opacity}}>
+    <div className="header" style={{opacity, marginTop: '15px'}}>
       {topLeft}
       {topRight}
       {bottomRight}

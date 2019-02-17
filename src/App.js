@@ -1062,8 +1062,15 @@ render() {
     </div>
   )
   if(web3){
+        let hideQRButton = false;
+      const queryStringParams = querystring.parse(window.location.search);
+      if (view !== 'loader' && queryStringParams && queryStringParams['burnerjs']) {
+          hideQRButton = true;
+      }
+
     header = (
       <Header
+        hideQRButton={hideQRButton}
         openScanner={this.openScanner.bind(this)}
         network={this.state.network}
         total={totalBalance}
@@ -1324,35 +1331,42 @@ render() {
                       transactionItems={queryStringParams['transactionItems']}
                       total={queryStringParams['total']}
                     >
-                        <button onClick={() => {
-                            window.location.href = queryStringParams.redirectBack + '?action=cancel&status=noop';
-                        }}>Cancel</button>
+                        <div style={{ display: 'flex', width: '100%' }}>
+                            <div style={{ paddingRight: '20px'}}>
+                                <button className={"btn btn-large w-50"} style={{backgroundColor:"transparent",color:"#FFFFFF",padding:10,whiteSpace:"nowrap"}} onClick={() => {
+                                    window.location.href = queryStringParams.redirectBack + '?action=cancel&status=noop';
+                                }}>Cancel</button>
+                            </div>
 
-                        <button name="theVeryBottom" className={`btn btn-lg w-100`} style={buttonStyle.primary}
-                                onClick={async () => {
-                                    console.log('TO:', queryStringParams['address'])
-                                    console.log(this.state.contracts)
-                                    this.confirmBurnerTransaction(
-                                        ERC20TOKEN,
-                                        queryStringParams['companyName'],
-                                        queryStringParams['companyTxId'],
-                                        queryStringParams['address'],
-                                        queryStringParams['total'],
-                                        (txHash) => {
-                                            window.location.href = queryStringParams.redirectBack + `?action=confirm&status=success&txhash=${txHash}`;
-                                        }
-                                    );
-                                }}>
-                          Send
-                        </button>
+                            <button name="theVeryBottom" className={`btn btn-lg w-100`} style={buttonStyle.primary}
+                                    onClick={async () => {
+                                        console.log('TO:', queryStringParams['address'])
+                                        console.log(this.state.contracts)
+                                        this.confirmBurnerTransaction(
+                                            ERC20TOKEN,
+                                            queryStringParams['companyName'],
+                                            queryStringParams['companyTxId'],
+                                            queryStringParams['address'],
+                                            queryStringParams['total'],
+                                            (txHash) => {
+                                                window.location.href = queryStringParams.redirectBack + `?action=confirm&status=success&txhash=${txHash}`;
+                                            }
+                                        );
+                                    }}>
+                              Send
+                            </button>
+                            </div>
                     </BurnerTransaction>
 
-                    <div style={{padding: '40px 0 0 0', display: 'flex', fontSize: '20px'}}>
+                    <div style={{padding: '40px 0 0 0', fontSize: '20px'}}>
+                        <h3 style={{color: '#fff'}}>Technical Details</h3>
+                        <div style={{display: 'flex',}}>
                         <Blockie
                             address={queryStringParams['address']}
                             config={{size:12}}>
                         </Blockie>
                         <div style={{ paddingLeft: '10px'}}>{queryStringParams['address'].substring(0, 10)}...</div>
+                        </div>
                     </div>
 
                   </div>
