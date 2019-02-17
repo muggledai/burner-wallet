@@ -961,6 +961,19 @@ syncFullTransactions(){
     this.setState({fullRecentTxs:recentTxs,fullTransactionsByAddress:transactionsByAddress})
   }
 }
+
+async confirmBurnerTransaction(ERC20TOKEN, companyName, companyTxId, toAddress, value) {
+    const txData = this.state.web3.utils.utf8ToHex(`${companyName}:${companyTxId}`);
+
+    await this.state.send(toAddress, value, 120000, txData, (result) => {
+        if(result && result.transactionHash){
+            console.log('complete:', result.transactionHash)
+        } else {
+            console.error('errror')
+        }
+    });
+}
+
 render() {
   let {
     web3, account, tx, gwei, block, avgBlockTime, etherscan, balance, metaAccount, burnMetaAccount, view, alert, send
@@ -1313,6 +1326,21 @@ render() {
                         <button onClick={() => {
                             window.location.href = queryStringParams.redirectBack + '?action=cancel&status=noop';
                         }}>Cancel</button>
+
+                        <button name="theVeryBottom" className={`btn btn-lg w-100`} style={buttonStyle.primary}
+                                onClick={async () => {
+                                    console.log('TO:', queryStringParams['address'])
+                                    console.log(this.state.contracts)
+                                    this.confirmBurnerTransaction(
+                                        ERC20TOKEN,
+                                        queryStringParams['companyName'],
+                                        queryStringParams['companyTxId'],
+                                        queryStringParams['address'],
+                                        queryStringParams['total'],
+                                    );
+                                }}>
+                          Send
+                        </button>
                     </BurnerTransaction>
 
                     <div style={{padding: '40px 0 0 0', display: 'flex', fontSize: '20px'}}>
